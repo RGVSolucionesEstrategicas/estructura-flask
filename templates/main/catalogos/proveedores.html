@@ -1,0 +1,89 @@
+<div id="proveedores_view" class="flex flex-col gap-5 min-h-[calc(100vh-188px)] sm:min-h-[calc(100vh-204px)]">
+    <div class="grid grid-cols-1 gap-5">
+        <div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg">
+            <div class="flex justify-between items-center">
+                <h2 class="text-base font-semibold mb-4">Proveedores</h2>
+                <div class="flex gap-2">
+                    <button onclick="add_proveedores()" type="button" class="border w-10 h-10 flex items-center justify-center text-primary border-transparent rounded-md transition-all duration-300 hover:text-white hover:bg-primary bg-primary/10">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 7.00005L7 7.00005M7 7.00005L1 7.00005M7 7.00005L7 1M7 7.00005L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                    <button id="export_button" onclick="exportTableToCSV('proveedores_table')" type="submit" class="border w-10 h-10 flex items-center justify-center text-primary border-transparent rounded-md transition-all duration-300 hover:text-white hover:bg-primary bg-primary/10">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>        
+            <div class="table-container">
+                <table class="min-w-[640px] w-full product-table table-striped" id="proveedores_table">
+                    <thead>
+                        <tr class="text-left">
+                            <th onclick="sortTable('proveedores_table',0)">
+                                ID Proveedor
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                            <th onclick="sortTable('proveedores_table',1)">
+                                Nombre
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                            <th onclick="sortTable('proveedores_table',2)">
+                                RFC
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                            <th onclick="sortTable('proveedores_table',3)">
+                                Razón social
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                            <th onclick="sortTable('proveedores_table',4)">
+                                Estatus
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                            <th onclick="sortTable('proveedores_table',5)">
+                                Fecha creado
+                                <svg width="10" height="6" class="inline-block" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9.70711 1.70711C10.0976 1.31658 10.0976 0.683418 9.70711 0.292894C9.31658 -0.0976307 8.68342 -0.0976308 8.29289 0.292894L5 3.58579L1.70711 0.292893C1.31658 -0.097631 0.683417 -0.0976311 0.292893 0.292893C-0.0976309 0.683417 -0.097631 1.31658 0.292893 1.70711L4.29289 5.70711C4.68342 6.09763 5.31658 6.09763 5.70711 5.70711L9.70711 1.70711Z" fill="currentColor"></path>
+                                </svg>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in table_proveedores %}
+                        <tr>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.id_proveedor }}</td>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.nombre }}</td>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.rfc }}</td>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.razon_social }}</td>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.estatus }}</td>
+                            <td  style="word-wrap: break-word;word-break: break-word;white-space: normal;overflow: hidden;text-overflow: ellipsis">{{ record.fecha_creado }}</td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'forms/proveedores.html' %}
+<script>
+    function add_proveedores() {
+        form_proveedores.style.display = 'block';
+        proveedores_view.style.display = 'none';
+    }
+    function close_popup_proveedores() {
+        form_proveedores.style.display = 'none';
+        proveedores_view.style.display = 'block';
+    }
+</script>

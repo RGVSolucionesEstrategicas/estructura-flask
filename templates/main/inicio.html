@@ -1,0 +1,18 @@
+{% extends './partials/layout1.html' %}
+{% block content %}
+{% include 'partials/alerts.html' %}
+<div class="flex flex-col gap-5 min-h-[calc(100vh-188px)] sm:min-h-[calc(100vh-204px)]">
+	<div class="grid grid-cols-1 gap-5">
+		<div id="table" class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg">
+			<div class="flex justify-between items-center">
+				<h2 class="text-base font-semibold mb-4">Formularios</h2>
+			</div>
+			<div class="table-container">
+
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/static/js/sorttable.js"></script>
+<script src="/static/js/export_table.js"></script>
+{% endblock content %}
