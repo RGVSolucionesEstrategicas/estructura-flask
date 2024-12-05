@@ -1,25 +1,22 @@
 # python/routes/authentication.py
 
-from flask import Blueprint, request, render_template, session, redirect, url_for
-from werkzeug.security import check_password_hash, generate_password_hash
-from python.models.rds_models import Users
-from python.models import db
-import secrets
-import string
 
-auth_bp = Blueprint(
-    "auth", __name__, url_prefix="/authentication"
-)
+from flask import Blueprint, redirect, render_template, request, session, url_for
+from werkzeug.security import check_password_hash
+
+from python.models.rds_models import Users
+
+auth_bp = Blueprint("auth", __name__, url_prefix="/authentication")
 
 
 @auth_bp.route("/login")
 def login():
     return render_template("authentication/login.html")
 
+
 @auth_bp.route("/signin")
 def signin():
-		return render_template("authentication/signin.html")
-
+    return render_template("authentication/signin.html")
 
 
 @auth_bp.route("/login_submit", methods=["POST"])
