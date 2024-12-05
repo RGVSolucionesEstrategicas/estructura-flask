@@ -132,14 +132,27 @@ Para desplegar la aplicación a AWS usando GitHub Actions, se deben seguir los s
 - `SECRET_KEY
 - `DATABASE_URL`
 
-## Plantilla frontend
+## Información adicional
+
+### Plantilla frontend
 
 La plantilla frontend de la aplicación se encuentra en el siguiente [enlace (drive)](https://drive.google.com)
 
-## Actualizar dependencias
+### Actualizar dependencias
 
 Actualizar dependencias
 
 ```bash
 pip freeze > requirements.txt
 ```
+
+### Tipos de alertas flash
+
+Estas son las clases de alertas flash que se pueden utilizar compatibles con la plantilla frontend:
+
+- `primary`
+- `purple`
+- `success`
+- `warning`
+- `danger`
+- `gray`
