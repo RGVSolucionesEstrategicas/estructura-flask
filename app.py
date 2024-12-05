@@ -1,49 +1,63 @@
 # app.py
 
-from markupsafe import Markup
-from flask import Flask, session
-import flask
-
-flask.Markup = Markup
-from dotenv import load_dotenv
-
-load_dotenv()
-
-app = Flask(__name__)
-
-from flask_security import (
-    Security,
-    SQLAlchemyUserDatastore,
-    auth_required,
-    current_user,
-)
-from flask_security.models import fsqla_v3 as fsqla
+from flask import Flask
 from flask_session import Session
-from flask import Flask, session
+from flask_login import LoginManager
 from dotenv import load_dotenv
+from python.models import db
+from python.models.rds_models import Users
 import os
 
-from python.routes import *
-from python.models import *
-from python.services import *
+# Cargar variables de entorno
+load_dotenv()
+
+# Inicializar la aplicación Flask
+app = Flask(__name__)
+
+# Configuración de la aplicación
+app.secret_key = os.urandom(24)
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["SECRET_KEY"] = os.urandom(24)
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Inicializar extensiones
+db.init_app(app)
+Session(app)
 
 
+# Configuración de Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "auth.login"  # Nombre del endpoint de login
+login_manager.login_message = "Por favor, inicia sesión para acceder a esta página."
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """Cargar un usuario basado en su ID."""
+    return Users.query.get(
+        user_id
+    )  # Asegúrate de que esto coincida con el modelo y tipo de dato
+
+
+# Filtro para formatear números con comas
 @app.template_filter("commafy")
 def commafy(value):
     a = round(value, 2)
     return f"{a:,}"
-@app.route("/")
-def home():
-    return "¡Bienvenido a mi aplicación Flask!"
+
 
 app.jinja_env.filters["commafy"] = commafy
 
-app.secret_key = os.urandom(24)
+# Registro de Blueprints
+from python.routes.authentication import auth_bp
+from python.routes.home import home_bp
 
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SECRET_KEY"] = os.urandom(24)
-
-Session(app)
+app.register_blueprint(auth_bp)
+app.register_blueprint(home_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
