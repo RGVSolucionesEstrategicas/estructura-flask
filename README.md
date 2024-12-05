@@ -84,13 +84,18 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Inicializar la base de datos:
+4. Inicializar la base de datos (si es necesario):
 
 ```bash
 flask db init
 flask db migrate
 flask db upgrade
 ```
+
+¿Cuándo inicializar la base de datos?
+
+- Si se creará una nueva base de datos en AWS RDS.
+- Si se desea crear una base de datos local.
 
 5. Ejecutar la aplicación:
 
