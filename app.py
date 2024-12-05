@@ -1,15 +1,17 @@
 # app.py
 
-from python.routes.home import home_bp
-from python.routes.authentication import auth_bp
-from flask import Flask
-from flask_session import Session
+import os
+
+from dotenv import load_dotenv
+from flask import Flask, flash, redirect, url_for
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from dotenv import load_dotenv
+
+from flask_session import Session
 from python.models import db
 from python.models.rds_models import Users
-import os
+from python.routes.authentication import auth_bp
+from python.routes.home import home_bp
 
 # Cargar variables de entorno
 load_dotenv()
@@ -31,18 +33,24 @@ db.init_app(app)
 migrate = Migrate(app, db)
 Session(app)
 
-
 # Configuración de Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
-login_manager.login_message = "Por favor, inicia sesión para acceder a esta página."
+login_manager.login_message = None
 
 
 @login_manager.user_loader
 def load_user(user_id):
     """Cargar un usuario basado en su ID."""
     return Users.query.get(user_id)
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    """Manejar accesos no autorizados con mensajes flash"""
+    flash("Por favor, inicia sesión para acceder a esta página.", "danger")
+    return redirect(url_for(login_manager.login_view))
 
 
 # Filtro para formatear números con comas
