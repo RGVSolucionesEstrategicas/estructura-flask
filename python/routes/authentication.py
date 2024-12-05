@@ -16,6 +16,11 @@ auth_bp = Blueprint(
 def login():
     return render_template("authentication/login.html")
 
+@auth_bp.route("/signin")
+def signin():
+		return render_template("authentication/signin.html")
+
+
 
 @auth_bp.route("/login_submit", methods=["POST"])
 def login_submit():
