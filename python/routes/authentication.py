@@ -33,6 +33,11 @@ def add_user():
         flash("El correo ya está registrado. Por favor, usa otro.", "danger")
         return redirect(url_for("auth.signin"))
 
+		# Verificar si los campos están vacíos
+    if not email or not password or not name:
+        flash("Todos los campos son obligatorios.", "danger")
+        return redirect(url_for("auth.signin"))
+
     # Crear un nuevo usuario
     new_user = Users(nombre=name, correo_electronico=email)
     new_user.set_password(password)
