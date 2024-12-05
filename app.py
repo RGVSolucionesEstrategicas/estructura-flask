@@ -5,6 +5,7 @@ from python.routes.authentication import auth_bp
 from flask import Flask
 from flask_session import Session
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from dotenv import load_dotenv
 from python.models import db
 from python.models.rds_models import Users
@@ -21,13 +22,13 @@ app.secret_key = os.urandom(24)
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = os.urandom(24)
 app.config["SQLALCHEMY_DATABASE_URI"] = (
-    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{
-        os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Inicializar extensiones
 db.init_app(app)
+migrate = Migrate(app, db)
 Session(app)
 
 
@@ -41,9 +42,7 @@ login_manager.login_message = "Por favor, inicia sesión para acceder a esta pá
 @login_manager.user_loader
 def load_user(user_id):
     """Cargar un usuario basado en su ID."""
-    return Users.query.get(
-        user_id
-    )
+    return Users.query.get(user_id)
 
 
 # Filtro para formatear números con comas
@@ -56,6 +55,8 @@ def commafy(value):
 app.jinja_env.filters["commafy"] = commafy
 
 # Registro de Blueprints
+from python.routes.authentication import auth_bp
+from python.routes.home import home_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(home_bp)

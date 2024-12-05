@@ -135,3 +135,11 @@ Para desplegar la aplicación a AWS usando GitHub Actions, se deben seguir los s
 ## Plantilla frontend
 
 La plantilla frontend de la aplicación se encuentra en el siguiente [enlace (drive)](https://drive.google.com)
+
+## Actualizar dependencias
+
+Actualizar dependencias
+
+```bash
+pip freeze > requirements.txt
+```
