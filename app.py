@@ -1,5 +1,7 @@
 # app.py
 
+from python.routes.home import home_bp
+from python.routes.authentication import auth_bp
 from flask import Flask
 from flask_session import Session
 from flask_login import LoginManager
@@ -19,7 +21,8 @@ app.secret_key = os.urandom(24)
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = os.urandom(24)
 app.config["SQLALCHEMY_DATABASE_URI"] = (
-    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{
+        os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -31,7 +34,7 @@ Session(app)
 # Configuración de Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "auth.login"  # Nombre del endpoint de login
+login_manager.login_view = "auth.login"
 login_manager.login_message = "Por favor, inicia sesión para acceder a esta página."
 
 
@@ -40,7 +43,7 @@ def load_user(user_id):
     """Cargar un usuario basado en su ID."""
     return Users.query.get(
         user_id
-    )  # Asegúrate de que esto coincida con el modelo y tipo de dato
+    )
 
 
 # Filtro para formatear números con comas
@@ -53,8 +56,6 @@ def commafy(value):
 app.jinja_env.filters["commafy"] = commafy
 
 # Registro de Blueprints
-from python.routes.authentication import auth_bp
-from python.routes.home import home_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(home_bp)

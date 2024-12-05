@@ -9,7 +9,7 @@ import string
 
 auth_bp = Blueprint(
     "auth", __name__, url_prefix="/authentication"
-)  # Definición del Blueprint
+)
 
 
 @auth_bp.route("/login")
@@ -28,6 +28,11 @@ def login_submit():
         session["correo"] = user.correo_electronico
         return redirect("/")
     return redirect(url_for("auth.login"))
+
+
+@auth_bp.route("/forgotpassword")
+def forgot_password():
+    return render_template("authentication/forgotpassword.html")
 
 
 @auth_bp.route("/logout")
