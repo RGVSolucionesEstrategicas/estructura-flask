@@ -2,7 +2,7 @@
 
 
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from werkzeug.security import check_password_hash
+from flask_login import login_user
 
 from python.models import db
 from python.models.rds_models import Users
@@ -51,15 +51,31 @@ def add_user():
 
 @auth_bp.route("/login_submit", methods=["POST"])
 def login_submit():
-    email = request.form["email"]
-    contrasena = request.form["password"]
-    user = Users.query.filter(Users.correo_electronico == email).first()
-    if user and check_password_hash(user.contrasena, contrasena):
-        session["id"] = user.id
-        session["nombre"] = user.nombre
-        session["correo"] = user.correo_electronico
-        return redirect("/")
-    return redirect(url_for("home.incio"))
+    """Autentica al usuario."""
+    email = request.form.get("email")
+    contrasena = request.form.get("password")
+
+    # Verificar si los campos están vacíos
+    if not email or not contrasena:
+        flash("Todos los campos son obligatorios.", "danger")
+        return redirect(url_for("auth.login"))
+
+    # Buscar al usuario en la base de datos
+    user = Users.query.filter_by(correo_electronico=email).first()
+    if not user:
+        flash("El correo electrónico no está registrado.", "danger")
+        return redirect(url_for("auth.login"))
+
+    # Verificar la contraseña
+    if not user.check_password(contrasena):
+        flash("Contraseña incorrecta. Inténtalo nuevamente.", "danger")
+        return redirect(url_for("auth.login"))
+
+    # Establecer al usuario como autenticado
+    login_user(user)
+
+    flash(f"¡Bienvenido, {user.nombre}!", "success")
+    return redirect(url_for("home.inicio"))
 
 
 @auth_bp.route("/forgotpassword")
