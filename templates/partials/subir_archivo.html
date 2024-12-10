@@ -1,10 +1,46 @@
 <!-- templates/partials/subir_archivo.html -->
 
-<button type="button"
-	class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85]">
-	<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path d="M13 7.00005L7 7.00005M7 7.00005L1 7.00005M7 7.00005L7 1M7 7.00005L7 13" stroke="currentColor"
-			stroke-width="2" stroke-linecap="round" />
-	</svg>
-	Subir archivo
-</button>
+<!-- Mensajes Flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="mb-4">
+	{% for category, message in messages %}
+	<div class="rounded p-3 bg-{{ category }}/10 text-{{ category }}">
+		{{ message }}
+	</div>
+	{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<!-- Botón y Nombre del Archivo -->
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('home.upload_file') }}">
+	<div class="flex flex-col items-start gap-4">
+		<!-- Botón para subir archivo -->
+		<div class="relative inline-block">
+			<label for="file-upload"
+				class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85] cursor-pointer">
+				Seleccionar archivo
+			</label>
+			<input id="file-upload" type="file" name="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+				onchange="updateFileName()" />
+		</div>
+
+		<!-- Mostrar el nombre del archivo seleccionado -->
+		<div id="file-name" class="text-gray-600 text-sm italic">Ningún archivo seleccionado</div>
+
+		<!-- Botón para enviar -->
+		<button type="submit"
+			class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85]">
+			Subir archivo
+		</button>
+	</div>
+</form>
+
+<script>
+	function updateFileName() {
+		const input = document.getElementById('file-upload');
+		const fileName = input.files.length > 0 ? input.files[0].name : 'Ningún archivo seleccionado';
+		document.getElementById('file-name').textContent = fileName;
+	}
+</script>
