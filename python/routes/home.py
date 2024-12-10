@@ -1,9 +1,11 @@
 # python/routes/home.py
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required
+from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
+
 
 from python.services.s3_service import S3Service
+
+from python.models.rds_models import Files
 
 
 home_bp = Blueprint("home", __name__)
@@ -38,3 +40,27 @@ def upload_file():
             return redirect(url_for("home.upload_file"))
 
     return render_template("main/upload.html", **data)
+
+
+@home_bp.route("/files", methods=["GET"])
+def files():
+    """Ruta para obtener todos los archivos desde la base de datos."""
+    try:
+        files = Files.query.order_by(Files.uploaded_at.desc()).all()
+        files_list = [
+            {
+                "filename": file.filename,
+                "filepath": file.filepath,
+                "uploaded_at": file.uploaded_at.strftime("%Y-%m-%d %H:%M:%S"),
+            }
+            for file in files
+        ]
+        return jsonify(files_list)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@home_bp.route("/files_view", methods=["GET"])
+def files_view():
+    """Vista para mostrar los archivos en la tabla."""
+    return render_template("partials/tabla_archivos.html")
