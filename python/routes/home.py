@@ -5,6 +5,7 @@ from flask_login import login_required
 
 from python.services.s3_service import S3Service
 
+
 home_bp = Blueprint("home", __name__)
 
 s3_service = S3Service()
@@ -29,8 +30,8 @@ def upload_file():
 
         # Sube el archivo a S3
         try:
-            file_url = s3_service.upload_file(file, file.filename)
-            flash("Archivo subido exitosamente", "success")
+            file_url = s3_service.upload_file(file)
+            flash(f"Archivo subido exitosamente: {file_url}", "success")
             return redirect(url_for("home.upload_file"))
         except Exception as e:
             flash(f"Error al subir el archivo: {e}", "danger")

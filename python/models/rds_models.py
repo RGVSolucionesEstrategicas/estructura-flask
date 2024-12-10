@@ -1,5 +1,6 @@
 # python/models/rds_models.py
 
+import uuid
 from datetime import datetime
 
 from flask_login import UserMixin
@@ -35,3 +36,18 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         """Represent the user object as a string."""
         return f"<Users(id={self.id}, nombre={self.nombre}, correo={self.correo_electronico})>"
+
+
+class Files(db.Model):
+    __tablename__ = "files"
+
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    filename = db.Column(db.String(255), nullable=False)
+    filepath = db.Column(db.String(255), nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def __repr__(self):
+        """Represent the file object as a string."""
+        return (
+            f"<Files(id={self.id}, filename={self.filename}, filepath={self.filepath})>"
+        )
