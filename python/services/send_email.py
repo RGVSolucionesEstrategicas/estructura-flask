@@ -1,3 +1,5 @@
+# python/services/send_email.py
+
 import smtplib
 from flask import render_template
 import os

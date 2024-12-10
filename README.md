@@ -11,12 +11,13 @@
 ├── .github
 │   └── workflows
 ├── python
-│   ├── config
+│   ├── forms
 │   ├── models
 │   ├── routes
 │   └── services
 ├── static
 │   ├── css
+│   ├── images
 │   └── js
 ├── templates
 │   ├── auth
@@ -84,7 +85,23 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Inicializar la base de datos (si es necesario):
+4. Variables de entorno:
+
+Crear un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno:
+
+```bash
+# database configuration
+DB_USER=postgres
+DB_PASSWORD=password # cambiar por la contraseña de la base de datos
+DB_HOST=localhost # cambiar por la dirección de la base de datos
+DB_NAME=db_name # cambiar por el nombre de la base de datos 
+DB_PORT=5432
+# email configuration
+EMAIL_USER=email # cambiar por el correo electrónico
+EMAIL_PASSWORD=password # cambiar por la contraseña del correo electrónico (app password)
+```
+
+5. Inicializar la base de datos (si es necesario):
 
 ```bash
 flask db init
@@ -97,7 +114,7 @@ flask db upgrade
 - Si se creará una nueva base de datos en AWS RDS.
 - Si se desea crear una base de datos local.
 
-5. Ejecutar la aplicación:
+6. Ejecutar la aplicación:
 
 ```bash
 flask run
@@ -136,7 +153,7 @@ Para desplegar la aplicación a AWS usando GitHub Actions, se deben seguir los s
 
 ### Plantilla frontend
 
-La plantilla frontend de la aplicación se encuentra en el siguiente [enlace (drive)](https://drive.google.com)
+La plantilla frontend de la aplicación usa Alpine.js y Tailwind CSS. Se encuentra en el siguiente [enlace (drive)](https://drive.google.com)
 
 ### Actualizar dependencias
 
@@ -156,3 +173,7 @@ Estas son las clases de alertas flash que se pueden utilizar compatibles con la 
 - `warning`
 - `danger`
 - `gray`
+
+### Contraseña de aplicación de Google (app password)
+
+La contraseña de aplicación de Google se puede generar en el siguiente [enlace](https://myaccount.google.com/apppasswords)
