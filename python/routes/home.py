@@ -30,7 +30,7 @@ def upload_file():
         # Sube el archivo a S3
         try:
             file_url = s3_service.upload_file(file, file.filename)
-            flash(f"Archivo subido exitosamente", "success")
+            flash("Archivo subido exitosamente", "success")
             return redirect(url_for("home.upload_file"))
         except Exception as e:
             flash(f"Error al subir el archivo: {e}", "danger")
