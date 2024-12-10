@@ -1,6 +1,9 @@
 window.dataTable = function () {
 	return {
 		items: [],
+		initData() {
+			this.fetchData();
+		},
 		fetchData() {
 			fetch("/files/data")
 				.then((response) => response.json())
@@ -8,7 +11,7 @@ window.dataTable = function () {
 					if (data.error) {
 						console.error("Error:", data.error);
 					} else {
-						this.items = data.sort(this.compareOnKey("filename", "asc"));
+						this.items = data.sort(this.compareOnKey("uploaded_at", "desc"));
 					}
 				})
 				.catch((error) => {

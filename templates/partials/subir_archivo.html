@@ -14,28 +14,31 @@
 {% endwith %}
 
 <!-- Botón y Nombre del Archivo -->
-<form method="POST" enctype="multipart/form-data" action="{{ url_for('files.files_view') }}">
-	<div class="flex flex-col items-start gap-4">
-		<!-- Botón para subir archivo -->
-		<div class="relative inline-block">
-			<label for="file-upload"
-				class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85] cursor-pointer">
-				Seleccionar archivo
-			</label>
-			<input id="file-upload" type="file" name="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-				onchange="updateFileName()" />
+
+<div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg mb-4">
+	<form method="POST" enctype="multipart/form-data" action="{{ url_for('files.files_view') }}">
+		<div class="flex flex-col items-start gap-4">
+			<!-- Botón para subir archivo -->
+			<div class="relative inline-block">
+				<label for="file-upload"
+					class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85] cursor-pointer">
+					Seleccionar archivo
+				</label>
+				<input id="file-upload" type="file" name="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+					onchange="updateFileName()" />
+			</div>
+
+			<!-- Mostrar el nombre del archivo seleccionado -->
+			<div id="file-name" class="text-gray-600 text-sm italic">Ningún archivo seleccionado</div>
+
+			<!-- Botón para enviar -->
+			<button type="submit"
+				class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85]">
+				Subir archivo
+			</button>
 		</div>
-
-		<!-- Mostrar el nombre del archivo seleccionado -->
-		<div id="file-name" class="text-gray-600 text-sm italic">Ningún archivo seleccionado</div>
-
-		<!-- Botón para enviar -->
-		<button type="submit"
-			class="btn flex items-center gap-2 bg-primary border border-primary rounded-md text-white transition-all duration-300 hover:bg-primary/[0.85] hover:border-primary/[0.85]">
-			Subir archivo
-		</button>
-	</div>
-</form>
+	</form>
+</div>
 
 <script>
 	function updateFileName() {
