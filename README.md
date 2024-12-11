@@ -1,4 +1,4 @@
-# Estructura RGV para crear aplicaciones web con Flask
+# App bajío
 
 <p align="center">
   <img src="https://i.ibb.co/64rmBtF/rgv.png" alt="RGV logo" title="RGV logo" />
@@ -136,11 +136,17 @@ Para desplegar la aplicación a AWS usando GitHub Actions, se deben seguir los s
 
 ### Variables de entorno de GitHub
 
-- `AWS_ACCESS
+#### Secrets
+
+- `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
+
+#### Variables
+
+- `APPLICATION_NAME`
 - `AWS_REGION`
-- `AWS_EB_APPLICATION_NAME`
-- `AWS_EB_ENVIRONMENT_NAME`
+- `ENVIRONMENT_NAME`
+- `S3_BUCKET`
 
 ### Variables de entorno de AWS Elastic Beanstalk
 
