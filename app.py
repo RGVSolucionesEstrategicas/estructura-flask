@@ -23,6 +23,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = os.urandom(24)
+
+# Acceder a Base de Datos
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 )
