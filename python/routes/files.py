@@ -3,10 +3,10 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 
 from python.models.rds_models import Files
-from python.services.s3_service import S3Service
+from python.services.s3_boto3 import S3Service
 
 files_bp = Blueprint("files", __name__, url_prefix="/files")
-s3_service = S3Service()
+s3_boto3 = S3Service()
 
 
 @files_bp.route("/", methods=["GET", "POST"])
@@ -20,7 +20,7 @@ def files_view():
 
         try:
             # Subir el archivo a S3
-            file_url = s3_service.upload_file(file)
+            file_url = s3_boto3.upload_file(file)
             flash("Archivo subido exitosamente.", "success")
         except Exception as e:
             flash(f"Error al subir el archivo: {e}", "danger")
@@ -40,7 +40,7 @@ def upload_file():
 
     try:
         # Subir el archivo a S3
-        file_url = s3_service.upload_file(file)
+        file_url = s3_boto3.upload_file(file)
         flash("Archivo subido exitosamente.", "success")
     except Exception as e:
         flash(f"Error al subir el archivo: {e}", "danger")
