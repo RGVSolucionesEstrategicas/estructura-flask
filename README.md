@@ -18,15 +18,17 @@
 ├── static
 │   ├── css
 │   ├── images
-│   └── js
+│   ├── js
+│   └── queries
 ├── templates
-│   ├── auth
+│   ├── authentication
 │   ├── forms
+│   ├── functionalities
 │   ├── main
+│   ├── pages
 │   └── partials
 ├── .env
 ├── .gitignore
-├── migrations
 ├── app.py
 ├── Procfile
 ├── README.md
