@@ -10,3 +10,8 @@ def inicio():
     """Ruta principal."""
     data = {"activeMenu": "inicio"}
     return render_template("main/inicio.html", **data)
+
+
+@home_bp.route("/health")
+def health():
+    return "OK", 200
