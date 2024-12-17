@@ -5,3 +5,4 @@ flask_session/
 venv/
 migrations/
 .env
+.flaskenv
