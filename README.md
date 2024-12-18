@@ -92,15 +92,25 @@ pip install -r requirements.txt
 Crear un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno:
 
 ```bash
-# database configuration
+# database connection
 DB_USER=postgres
-DB_PASSWORD=password # cambiar por la contraseña de la base de datos
-DB_HOST=localhost # cambiar por la dirección de la base de datos
-DB_NAME=db_name # cambiar por el nombre de la base de datos 
+DB_PASSWORD=password
+DB_HOST=localhost
+DB_NAME=db_name
 DB_PORT=5432
-# email configuration
-EMAIL_USER=email # cambiar por el correo electrónico
-EMAIL_PASSWORD=password # cambiar por la contraseña del correo electrónico (app password)
+
+# email credentials
+EMAIL_USER=email
+EMAIL_PASSWORD=password
+
+# AWS credentials
+AWS_ACCESS_KEY_ID=AKI...
+AWS_SECRET_ACCESS_KEY=anH...
+AWS_REGION=us-east-2
+AWS_S3_BUCKET_NAME=bucket-name
+
+# pruebas locales
+profile=prueba-local # produccion o prueba-local
 ```
 
 5. Inicializar la base de datos (si es necesario):
@@ -217,3 +227,26 @@ python3 --version
 Para instalar AWS CLI se puede hacer de la siguiente manera:
 
 Link: [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+### Configurar perfil local de AWS CLI
+
+Para configurar un perfil local de AWS CLI se puede hacer de la siguiente manera:
+
+```bash
+aws configure --profile prueba-local
+```
+
+Ingresa los valores:
+
+- AWS Access Key ID: AKIA...
+- AWS Secret Access Key: anHm...
+- Default region name: us-east-2
+- Default output format: Usa json o deja vacío
+
+Verificar la configuración:
+
+```bash
+aws s3 ls s3://flask-archivos --profile prueba-local
+```
+
+Esto debe enlistar los archivos del bucket.

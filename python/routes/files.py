@@ -1,5 +1,7 @@
 # python/routes/files.py
 
+import os
+
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 
 from python.models.rds_models import Files
@@ -7,11 +9,13 @@ from python.services.s3_boto3 import S3Service
 
 files_bp = Blueprint("files", __name__, url_prefix="/files")
 
-# para pruebas locales
-s3_service = S3Service(use_local_profile=True, profile_name="prueba-local")
+# Determinar el perfil desde variable de entorno
+profile = os.getenv("profile", "produccion")
 
-# para produccion
-# s3_service = S3Service()
+if profile == "prueba-local":
+    s3_service = S3Service(use_local_profile=True, profile_name="prueba-local")
+else:  # Perfil de producción
+    s3_service = S3Service()
 
 
 @files_bp.route("/", methods=["GET", "POST"])
