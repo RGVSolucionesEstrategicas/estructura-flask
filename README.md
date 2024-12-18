@@ -185,3 +185,35 @@ Estas son las clases de alertas flash que se pueden utilizar compatibles con la 
 ### Contraseña de aplicación de Google (app password)
 
 La contraseña de aplicación de Google se puede generar en el siguiente [enlace](https://myaccount.google.com/apppasswords)
+
+### Instalar Python 3.12.8
+
+Actualmente la versión mas estable de Python para AWS Elastic Beanstalk es la 3.12.8, para instalarla se puede hacer de la siguiente manera:
+
+#### MacOS
+
+1. Instar pyenv (gestor de versiones de Python) y luego instalar la versión 3.12.8
+
+```bash
+brew install pyenv
+pyenv install 3.12.8
+```
+
+2. Configurar la versión global de Python (opcional)
+
+```bash
+pyenv global 3.12.8
+```
+
+3. Verificar la versión de Python
+
+```bash
+python --version
+python3 --version
+```
+
+### Instalar AWS CLI
+
+Para instalar AWS CLI se puede hacer de la siguiente manera:
+
+Link: [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)

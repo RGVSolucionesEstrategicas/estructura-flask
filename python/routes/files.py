@@ -6,7 +6,12 @@ from python.models.rds_models import Files
 from python.services.s3_boto3 import S3Service
 
 files_bp = Blueprint("files", __name__, url_prefix="/files")
-s3_boto3 = S3Service()
+
+# para pruebas locales
+s3_service = S3Service(use_local_profile=True, profile_name="prueba-local")
+
+# para produccion
+# s3_service = S3Service()
 
 
 @files_bp.route("/", methods=["GET", "POST"])
@@ -20,7 +25,7 @@ def files_view():
 
         try:
             # Subir el archivo a S3
-            file_url = s3_boto3.upload_file(file)
+            file_url = s3_service.upload_file(file)
             flash("Archivo subido exitosamente.", "success")
         except Exception as e:
             flash(f"Error al subir el archivo: {e}", "danger")
@@ -40,7 +45,7 @@ def upload_file():
 
     try:
         # Subir el archivo a S3
-        file_url = s3_boto3.upload_file(file)
+        file_url = s3_service.upload_file(file)
         flash("Archivo subido exitosamente.", "success")
     except Exception as e:
         flash(f"Error al subir el archivo: {e}", "danger")
@@ -61,5 +66,21 @@ def files_data():
             for file in files
         ]
         return jsonify(files_list)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@files_bp.route("/generate-presigned-url", methods=["POST"])
+def generate_presigned_url():
+    """
+    Genera y retorna una URL firmada para descargar un archivo de S3.
+    """
+    try:
+        filepath = request.json.get("filepath")
+        if not filepath:
+            return jsonify({"error": "El campo 'filepath' es obligatorio"}), 400
+
+        presigned_url = s3_service.generate_presigned_url(filepath)
+        return jsonify({"presigned_url": presigned_url}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

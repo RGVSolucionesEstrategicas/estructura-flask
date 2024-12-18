@@ -17,10 +17,10 @@
 						<td x-text="item.filename" class="truncate max-w-[200px]"></td>
 						<td x-text="item.uploaded_at"></td>
 						<td>
-							<a :href="item.filepath" download
+							<button @click="downloadFile(item.filepath)"
 								class="btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/[0.85] transition-all">
 								Descargar
-							</a>
+							</button>
 						</td>
 					</tr>
 				</template>
@@ -33,3 +33,31 @@
 <!-- Datatables Js -->
 <script src="/static/js/datatable_archivos.js"></script>
 <script src="/static/js/data-search.js"></script>
+
+<script>
+	async function downloadFile(filepath) {
+		try {
+			// Solicitar la URL firmada
+			const response = await fetch("/files/generate-presigned-url", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ filepath }),
+			});
+
+			if (!response.ok) {
+				throw new Error("Error al obtener la URL firmada");
+			}
+
+			const data = await response.json();
+			const presignedUrl = data.presigned_url;
+
+			// Descargar el archivo
+			window.location.href = presignedUrl;
+		} catch (error) {
+			console.error("Error al descargar el archivo:", error);
+			alert("Hubo un error al intentar descargar el archivo. Inténtelo de nuevo.");
+		}
+	}
+</script>
