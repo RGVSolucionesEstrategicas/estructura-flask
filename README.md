@@ -250,3 +250,5 @@ aws s3 ls s3://flask-archivos --profile prueba-local
 ```
 
 Esto debe enlistar los archivos del bucket.
+
+NOTA: El usuario de IAM debe tener permisos y políticas necesarios (S3, ListObjects, GetObject, PutObject, etc).
