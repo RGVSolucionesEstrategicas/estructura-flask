@@ -1,7 +1,7 @@
 # App bajío
 
 <p align="center">
-  <img src="https://i.ibb.co/64rmBtF/rgv.png" alt="RGV logo" title="RGV logo" />
+  <img src="https://i.ibb.co/ZXwqGHW/rgv.png" alt="RGV logo" title="RGV logo" />
 </p>
 
 ## Estructura del proyecto
