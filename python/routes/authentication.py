@@ -9,16 +9,13 @@ from python.models.rds_models import Users
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/authentication")
 
-
 @auth_bp.route("/login")
 def login():
     return render_template("authentication/login.html")
 
-
 @auth_bp.route("/signin")
 def signin():
     return render_template("authentication/signin.html")
-
 
 @auth_bp.route("/add_user", methods=["POST"])
 def add_user():
@@ -52,7 +49,6 @@ def add_user():
         flash("Ocurrió un error al crear el usuario. Inténtalo nuevamente.", "danger")
         print(f"Error al crear el usuario: {e}")
         return redirect(url_for("auth.signin"))
-
 
 @auth_bp.route("/login_submit", methods=["POST"])
 def login_submit():

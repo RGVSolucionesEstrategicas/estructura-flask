@@ -69,11 +69,13 @@ from python.routes.authentication import auth_bp
 from python.routes.home import home_bp
 from python.routes.errors import errors_bp
 from python.routes.files import files_bp
+from python.routes.users import users_bp
 
 app.register_blueprint(errors_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(home_bp)
 app.register_blueprint(files_bp)
+app.register_blueprint(users_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

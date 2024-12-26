@@ -1,0 +1,31 @@
+<!-- templates/main/editar.html -->
+
+{% extends './partials/layout1.html' %}
+
+{% block content %}
+<div class="flex flex-col gap-5 min-h-[calc(100vh-188px)] sm:min-h-[calc(100vh-204px)]">
+	<div class="grid grid-cols-1 gap-5">
+		<div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg">
+			<h2 class="text-base font-semibold mb-4">Editar Usuario</h2>
+
+			<form method="POST" action="{{ url_for('users.update_user', user_id=user.id) }}">
+				<div class="grid grid-cols-2 gap-4">
+					<input type="text" name="nombre" placeholder="Nombre" value="{{ user.nombre }}" class="form-input" required>
+					<input type="email" name="correo_electronico" placeholder="Correo Electrónico"
+						value="{{ user.correo_electronico }}" class="form-input" required>
+					<input type="password" name="contrasena" placeholder="Nueva Contraseña (opcional)" class="form-input">
+				</div>
+				<div class="mt-4">
+					<button type="submit" class="btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/[0.85]">
+						Guardar Cambios
+					</button>
+					<a href="{{ url_for('users.users_view') }}"
+						class="btn bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary/[0.85]">
+						Cancelar
+					</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock content %}

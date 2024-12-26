@@ -1,0 +1,79 @@
+<!-- templates/main/crud.html -->
+
+{% extends './partials/layout1.html' %}
+
+{% block content %}
+
+<div class="flex flex-col gap-5 min-h-[calc(100vh-188px)] sm:min-h-[calc(100vh-204px)]">
+	<div class="grid grid-cols-1 gap-5">
+		<div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg">
+			<h2 class="text-base font-semibold mb-4">CRUD usuarios</h2>
+
+			<!-- Formulario -->
+			<form method="POST" action="{{ url_for('users.create_user') }}" class="mb-4">
+				<div class="grid grid-cols-3 gap-4">
+					<input type="text" name="nombre" placeholder="Nombre" class="form-input" required>
+					<input type="email" name="correo_electronico" placeholder="Correo Electrónico" class="form-input" required>
+					<input type="password" name="contrasena" placeholder="Contraseña" class="form-input" required>
+					<button type="submit" class="btn bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/[0.85]">
+						Crear Usuario
+					</button>
+				</div>
+			</form>
+
+			<!-- Tabla -->
+			<div class="bg-white dark:bg-dark dark:border-gray/20 border-2 border-lightgray/10 p-5 rounded-lg">
+				<h2 class="text-base font-semibold mb-4">Lista de usuarios</h2>
+				<div class="overflow-auto">
+					<table class="min-w-[640px] w-full product-table table-striped">
+						<thead>
+							<tr class="text-left">
+								<th>Nombre</th>
+								<th>Correo Electrónico</th>
+								<th>Estatus</th>
+								<th>Fecha de Creación</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for user in users %}
+							<tr>
+								<td>{{ user.nombre }}</td>
+								<td>{{ user.correo_electronico }}</td>
+								<td>
+									<span
+										class="px-3 py-1 text-sm font-bold rounded-full {% if user.estatus == 'Activo' %} bg-success text-white {% else %} bg-danger text-white {% endif %}">
+										{{ user.estatus }}
+									</span>
+								</td>
+								<td>{{ user.fecha_creado.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+								<td class="flex gap-2">
+									<a href="{{ url_for('users.update_user', user_id=user.id) }}"
+										class="btn bg-warning text-white px-4 py-2 rounded-md hover:bg-warning/[0.85] transition-all">
+										Editar
+									</a>
+									<form method="POST" action="{{ url_for('users.delete_user', user_id=user.id) }}">
+										<button type="submit"
+											class="btn bg-danger text-white px-4 py-2 rounded-md hover:bg-danger/[0.85] transition-all">
+											Eliminar
+										</button>
+									</form>
+								</td>
+
+							</tr>
+							{% endfor %}
+							{% if users|length == 0 %}
+							<tr>
+								<td colspan="5" class="text-center text-gray-500">No hay usuarios registrados.</td>
+							</tr>
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+{% endblock content %}
